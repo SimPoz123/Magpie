@@ -8,14 +8,14 @@
  * Handles responding to simple words and phrases</li>
  * </ul>
  * This version uses a nested if to handle default responses.
- * 
+ *
  * @author Laurie White
  * @version April 2012
  */
 public class Magpie2 {
 	/**
 	 * Get a default greeting
-	 * 
+	 *
 	 * @return a greeting
 	 */
 	public String getGreeting() {
@@ -24,13 +24,19 @@ public class Magpie2 {
 
 	/**
 	 * Gives a response to a user statement
-	 * 
+	 *
 	 * @param statement
 	 *            the user statement
 	 * @return a response based on the rules given
 	 */
 	public String getResponse(String statement) {
 		String response = "";
+
+		statement = statement.trim();
+		if (statement.length() < 1) {
+			response = "Say something, please.";
+		}
+
 		if (statement.indexOf("no") >= 0) {
 			response = "Why so negative?";
 		} else if (statement.indexOf("mother") >= 0
@@ -38,7 +44,17 @@ public class Magpie2 {
 				|| statement.indexOf("sister") >= 0
 				|| statement.indexOf("brother") >= 0) {
 			response = "Tell me more about your family.";
-		} else {
+		} else if (statement.indexOf("dog") >= 0 || statement.indexOf("cat") >= 0) {
+			response = "Tell me more about your pets.";
+		} else if (statement.indexOf("Mr. Padjen") >= 0) {
+			response = "He sounds like a good teacher.";
+		} else if (statement.indexOf("Simon") >= 0) {
+			response = "Simon is the coolest";
+		}	else if (statement.indexOf("scary") >= 0) {
+			response = "It's going to be okay";
+		} else if (statement.indexOf("buy") >= 0) {
+			response = "How much will it cost?";
+		} else {0
 			response = getRandomResponse();
 		}
 		return response;
@@ -46,11 +62,11 @@ public class Magpie2 {
 
 	/**
 	 * Pick a default response to use if nothing else fits.
-	 * 
+	 *
 	 * @return a non-committal string
 	 */
 	private String getRandomResponse() {
-		final int NUMBER_OF_RESPONSES = 4;
+		final int NUMBER_OF_RESPONSES = 6;
 		double r = Math.random();
 		int whichResponse = (int) (r * NUMBER_OF_RESPONSES);
 		String response = "";
@@ -63,6 +79,10 @@ public class Magpie2 {
 			response = "Do you really think so?";
 		} else if (whichResponse == 3) {
 			response = "You don't say.";
+		} else if (whichResponse == 4) {
+			response = "That's pretty neat.";
+		} else if (whichResponse == 5) {
+			response = "Rad.";
 		}
 
 		return response;
