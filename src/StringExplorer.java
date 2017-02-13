@@ -1,6 +1,6 @@
 /**
  * A program to allow students to try out different String methods.
- * 
+ *
  * @author Laurie White
  * @version April 2012
  */
@@ -12,6 +12,10 @@ public class StringExplorer {
 		// Demonstrate the indexOf method.
 		int position = sample.indexOf("quick");
 		System.out.println("sample.indexOf(\"quick\") = " + position);
+		int beforeFinal = sample.indexOf("quick", 5);
+		System.out.println("sample.indexOf(\"quick\", beforeFinal) = " + beforeFinal);
+		int notFoundPsn = sample.indexOf("slow");
+		System.out.println("sample.indexOf(\"slow\") = " + notFoundPsn);
 
 		// Demonstrate the toLowerCase method.
 		String lowerCase = sample.toLowerCase();
