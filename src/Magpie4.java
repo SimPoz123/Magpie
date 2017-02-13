@@ -6,15 +6,15 @@
  * <li>
  * Will transform statements as well as react to keywords</li>
  * </ul>
- * 
+ *
  * @author Laurie White
  * @version April 2012
- * 
+ *
  */
 public class Magpie4 {
 	/**
 	 * Get a default greeting
-	 * 
+	 *
 	 * @return a greeting
 	 */
 	public String getGreeting() {
@@ -23,7 +23,7 @@ public class Magpie4 {
 
 	/**
 	 * Gives a response to a user statement
-	 * 
+	 *
 	 * @param statement
 	 *            the user statement
 	 * @return a response based on the rules given
@@ -44,8 +44,13 @@ public class Magpie4 {
 		}
 
 		// Responses which require transformations
-		else if (findKeyword(statement, "I want to", 0) >= 0) {
+		else if (findKeyword(statement, "I want", 0) >= 0) {
 			response = transformIWantToStatement(statement);
+		}
+
+		else if (statement.substring(0) == "I" && statement.substring(statement.length() - 2, statement.length()) == "me") {
+			String restOfStatement = statement.substring(2, statement.length() - 2);
+			response = "Why do you" + restOfStatement + "me?";
 		}
 
 		else {
@@ -65,7 +70,7 @@ public class Magpie4 {
 	/**
 	 * Take a statement with "I want to <something>." and transform it into
 	 * "What would it mean to <something>?"
-	 * 
+	 *
 	 * @param statement
 	 *            the user statement, assumed to contain "I want to"
 	 * @return the transformed statement
@@ -77,15 +82,15 @@ public class Magpie4 {
 		if (lastChar.equals(".")) {
 			statement = statement.substring(0, statement.length() - 1);
 		}
-		int psn = findKeyword(statement, "I want to", 0);
-		String restOfStatement = statement.substring(psn + 9).trim();
-		return "What would it mean to " + restOfStatement + "?";
+		int psn = findKeyword(statement, "I want", 0);
+		String restOfStatement = statement.substring(psn + 6).trim();
+		return "Would you really be happy if you had " + restOfStatement + "?";
 	}
 
 	/**
 	 * Take a statement with "you <something> me" and transform it into
 	 * "What makes you think that I <something> you?"
-	 * 
+	 *
 	 * @param statement
 	 *            the user statement, assumed to contain "you" followed by "me"
 	 * @return the transformed statement
@@ -96,6 +101,11 @@ public class Magpie4 {
 		String lastChar = statement.substring(statement.length() - 1);
 		if (lastChar.equals(".")) {
 			statement = statement.substring(0, statement.length() - 1);
+		}
+
+		if (statement.substring(0) == "I" && statement.substring(statement.length() - 2, statement.length()) == "me") {
+			String restOfStatement = statement.substring(2, statement.length() - 2);
+			return "Why do yo" + restOfStatement + "me?";
 		}
 
 		int psnOfYou = findKeyword(statement, "you", 0);
@@ -110,7 +120,7 @@ public class Magpie4 {
 	 * Search for one word in phrase. The search is not case sensitive. This
 	 * method will check that the given goal is not a substring of a longer
 	 * string (so, for example, "I know" does not contain "no").
-	 * 
+	 *
 	 * @param statement
 	 *            the string to search
 	 * @param goal
@@ -167,7 +177,7 @@ public class Magpie4 {
 	 * method will check that the given goal is not a substring of a longer
 	 * string (so, for example, "I know" does not contain "no"). The search
 	 * begins at the beginning of the string.
-	 * 
+	 *
 	 * @param statement
 	 *            the string to search
 	 * @param goal
@@ -181,7 +191,7 @@ public class Magpie4 {
 
 	/**
 	 * Pick a default response to use if nothing else fits.
-	 * 
+	 *
 	 * @return a non-committal string
 	 */
 	private String getRandomResponse() {
